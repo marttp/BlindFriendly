@@ -31,12 +31,12 @@
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.mart.blindfriendly.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
-            <!--tools:replace="android:authorities"-->
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-                <!--tools:replace="android:resource"-->
+                android:resource="@xml/file_paths"
+                tools:replace="android:resource"/>
 
         </provider>
 

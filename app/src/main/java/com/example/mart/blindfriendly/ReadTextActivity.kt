@@ -60,13 +60,16 @@ class ReadTextActivity : AppCompatActivity() {
         //get request code
         when(requestCode){
             CAMERA_REQUEST_CODE -> {
-                if(resultCode == Activity.RESULT_OK && data != null) {
+                if(resultCode == Activity.RESULT_OK) {
                     try {
                         //create file from current path. You will get current path from
                         //createImageSaveStorage()
                         val file = File(currentPath)
+                        Log.i("File","$file")
                         val uri = Uri.fromFile(file)
+                        Log.i("Uri","$uri")
                         imageView.setImageURI(uri)
+
 
                         image = FirebaseVisionImage.fromFilePath(this, uri)
 //                        imageView.setImageBitmap(data.extras.get("data") as Bitmap)
@@ -76,7 +79,8 @@ class ReadTextActivity : AppCompatActivity() {
                         contentRecognition.text = null
                         val result = detector.detectInImage(image)
                             .addOnSuccessListener { texts ->
-                                contentRecognition.text = texts!!.text
+                                if(texts != null)
+                                    contentRecognition.text = texts.text
                             }
                                 .addOnFailureListener {
                                 Toast.makeText(this,"Unsuccessful",Toast.LENGTH_SHORT).show()
@@ -135,7 +139,7 @@ class ReadTextActivity : AppCompatActivity() {
             if(photoFile != null){
                 //you must create a content provide matching the authority
                 //get URI of file by find (photoFile)
-                var photoUri = FileProvider.getUriForFile(this,
+                val photoUri = FileProvider.getUriForFile(this,
                         "com.example.mart.blindfriendly.fileprovider",photoFile)
                 //Intent as OUTPUT by send URI of file
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -157,6 +161,7 @@ class ReadTextActivity : AppCompatActivity() {
         var image = File.createTempFile(imageName,".jpg", storageDirectory)
         //set path of created image and store in current path (below name of Class)
         currentPath = image.absolutePath
+        Log.i("Current path","$currentPath")
         //return File
         return image
         /*
