@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BlindFriendly</string>
+    <string name="text_menu">Read Text to Speech</string>
+    <string name="image_menu">Read Image to Speech</string>
+</resources>
