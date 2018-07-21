@@ -76,8 +76,10 @@ class ReadImageActivity : AppCompatActivity() {
                                 .addOnSuccessListener { labels ->
                                     if (labels != null) {
                                         for (label in labels) {
-                                            environmentRecognition.append(label.label + "\n")
-//                                            environmentRecognition.append(label.confidence.toString())
+                                            if(label.confidence>=0.75){
+                                                environmentRecognition.append(label.label+" :  ")
+                                                environmentRecognition.append(label.confidence.toString()+"\n")
+                                            }
                                         }
                                     }
                                 }
