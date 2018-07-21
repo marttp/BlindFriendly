@@ -28,11 +28,9 @@ import com.google.firebase.ml.vision.text.FirebaseVisionText
 
 class ReadTextActivity : AppCompatActivity() {
 
-
     var currentPath: String? = null
     val CAMERA_REQUEST_CODE = 0
     val GALLAERY_REQUEST_CODE = 1
-
 
     var options = FirebaseVisionCloudDetectorOptions.Builder()
             .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
@@ -102,7 +100,8 @@ class ReadTextActivity : AppCompatActivity() {
                         contentRecognition.text = null
                         val result = detector.detectInImage(image)
                                 .addOnSuccessListener { texts ->
-                                    contentRecognition.text = texts!!.text
+                                    if(texts != null)
+                                        contentRecognition.text = texts.text
                                 }
                                 .addOnFailureListener {
                                     Toast.makeText(this,"Unsuccessful",Toast.LENGTH_SHORT).show()
@@ -136,6 +135,8 @@ class ReadTextActivity : AppCompatActivity() {
             } catch (e: IOException){
                 e.printStackTrace()
             }
+
+            // check orientation
             if(photoFile != null){
                 //you must create a content provide matching the authority
                 //get URI of file by find (photoFile)
